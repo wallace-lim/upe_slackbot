@@ -1,0 +1,7 @@
+.DS_Store
+__pycache__/
+.python-version
+
+# Private credentials
+debug/client_creds.json
+client_creds.json

@@ -1,0 +1,27 @@
+{
+  "prod": {
+    "app_function": "upe-tracker.app",
+    "aws_region": "us-west-2",
+    "exclude": [
+      "__pycache__",
+      "debug/*",
+      "ver1/*",
+      ".git/*",
+      ".gitignore",
+      ".python-version",
+      "LICENSE",
+      "README.md",
+      "requirements.txt",
+      "zappa_settings.json",
+      "env.txt",
+    ],
+    "keep_warm": true,
+    "keep_warm_expression": "rate(5 minutes)",
+    "memory_size": 128,
+    "profile_name": "default",
+    "project_name": "upe-tracker",
+    "runtime": "python3.7",
+    "s3_bucket": "upe-tracker",
+    "timeout_seconds": 30,
+  }
+}
