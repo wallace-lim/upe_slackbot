@@ -1,8 +1,14 @@
-# REQUIREMENTS
-# Have there's as environment variables
-# export SLACK_VERIFICATION_TOKEN= <app verification token>
-# export SLACK_TEAM_ID= <slack channel team id>
-# export FLASK_APP= <app name>
+"""
+REQUIREMENTS
+Have there's as environment variables
+   export SLACK_VERIFICATION_TOKEN= <app verification token>
+   export SLACK_TEAM_ID= <slack channel team id>
+   export FLASK_APP= upe-tracker.py
+
+To find slack variables, 
+1) Slack TEAM_ID = located in browser URL in workspace in the form T-------
+2) Slack Verification Token = check app for verification token
+"""
 
 # Google Sheets Imports
 import gspread
@@ -30,13 +36,14 @@ socialSheet = sheet.worksheet('Socials')
 profSheet = sheet.worksheet('Professional Events')
 onoSheet = sheet.worksheet('One-On-Ones')
 
-# CANDIDATE TRACKER VALUES
+# Standand Google SpreadSheet Excel Column Locations
 standardCol = {
 	'email': 1,
 	'name': 2,
 	'track': 3,
 	'committee': 4
 }
+# Candidate Tracker Sheet Column Values
 candSheetCol = {
     'socials_complete': 8,
     'socials_reqs': 11,
@@ -53,6 +60,12 @@ candSheetCol = {
 
 app = Flask(__name__)
 
+# Possible actions
+actions = {
+	'/check' : {
+		'helpTxt' : [{'text': "Type `/check <candidate name>` to view a candidate's status"}],
+	}
+}
 """
 Checks whether provided action is a possible command
 """
@@ -82,6 +95,27 @@ def matchAllCandidates(expr):
 
 	return nameIndices
 
+"""
+Search for candidate given regex expr
+@param expr - regex expression from typed comment `/check <expr>`
+@return dictionary each candidate's info matching <expr>
+Example dct[<candidate name>]
+{
+	'socials_complete': '1', 
+	'socials_reqs': '2', 
+	'prof_complete': '2', 
+	'prof_reqs': '2', 
+	'ono_complete': '2', 
+	'ono_reqs': '2', 
+	'socials': ['Big/Little Mixer 2/15'], 
+	'prof': ['Jane Street (2/26)']
+	'gm1': YES,
+    'gm2': YES,
+    'gm3': NO,
+    'paid': TRUE,
+    'challenge': YES,
+}
+"""
 def getMatchedCandidates(expr):
 	def getCandidateEvents(sheetName, jump):
 		# Labels of current sheet
@@ -129,18 +163,11 @@ def getMatchedCandidates(expr):
 		
 	return candidates
 
-# {
-# 	'socials_complete': '1', 
-# 	'socials_reqs': '2', 
-# 	'prof_complete': '2', 
-# 	'prof_reqs': '2', 
-# 	'ono_complete': '2', 
-# 	'ono_reqs': '2', 
-# 	'socials': ['Big/Little Mixer 2/15'], 
-# 	'prof': ['Jane Street (2/26)']
-# }
-
-
+"""
+Format each candidate in dictionary into Slack Markdown Format
+@param dct - dictionary of matched candidate and their info
+@return block - list of Slack text components
+"""
 def formatCandidateText(dct):
 	block = []
 	# Format each candidate into markdown format
@@ -198,6 +225,9 @@ def formatCandidateText(dct):
 
 	return block
 
+"""
+POST Error message to Slack
+"""
 def error(msg, attachments, response_url):
 	data = {
 		"response_type": "ephemeral",
@@ -206,13 +236,10 @@ def error(msg, attachments, response_url):
 	}
 	requests.post(response_url, json=data)
 
-# Possible actions
-actions = {
-	'/check' : {
-		'helpTxt' : [{'text': "Type `/check <candidate name>` to view a candidate's status"}],
-	}
-}
-
+# DELETE `@TASK` IF NOT RUNNING ZAPPA (AWS LAMBDA)
+"""
+Runs bread and butter of code and POST back to slack
+"""
 @task
 def runGoogleSheets(req):
 	response_url = req['response_url']
@@ -238,6 +265,10 @@ def runGoogleSheets(req):
 	}
 	requests.post(response_url, json=data)
 
+"""
+POST request from Slack channel 
+Command: `/check <candidate name>`
+"""
 @app.route('/check', methods=['POST'])
 def track_candidates():
 
