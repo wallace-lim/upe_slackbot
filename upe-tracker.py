@@ -89,12 +89,13 @@ def is_request_valid(request):
 Find the Google Sheet row of each name matching with expr
 """
 def matchAllCandidates(expr):
+    expr = expr.lower()
     nameIndices = []
     nameLst = candSheet.col_values(standardCol['name'])[1:]
 
     for i in range(len(nameLst)):
         # expr matches candidate name
-        if re.search(expr, nameLst[i]):
+        if re.search(expr, nameLst[i].lower()):
             nameIndices.append(i+2)
 
     return nameIndices
