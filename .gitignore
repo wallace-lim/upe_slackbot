@@ -5,3 +5,4 @@ __pycache__/
 # Private credentials
 debug/client_creds.json
 client_creds.json
+env
