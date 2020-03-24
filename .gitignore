@@ -1,6 +1,8 @@
 .DS_Store
 __pycache__/
 .python-version
+run
+venv/
 
 # Private credentials
 debug/client_creds.json
