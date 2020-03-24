@@ -23,6 +23,9 @@ from flask import abort, Flask, jsonify, request
 # Zappa Imports
 # from zappa.asynchronous import task
 
+# Threading Imports
+import threading
+
 # Authorization
 DIRNAME = os.path.dirname(__file__)
 scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
@@ -284,13 +287,21 @@ def track_candidates():
         error('Please submit a valid command', actions['/check']['helpTxt'], req['response_url'])
         return
 
-    requests.post(response_url, json=jsonify(response_type='ephemeral',text='Loading your candidate data...'))
-    runGoogleSheets(req)
+    # Create a thread to spawn find the correct values    
+    processThread = threading.Thread(
+            target=runGoogleSheets,
+            args=(req,)
+        )
+    processThread.start()
 
-    # return jsonify(
-    #     response_type='ephemeral',
-    #     text='Loading your candidate data...',
-    # )
+    # -- UNCOMMENT -- if not using threading
+    # runGoogleSheets(req)
+
+    # Send back a temporary loading response
+    return jsonify(
+        response_type='ephemeral',
+        text='Loading your candidate data...',
+    )
 
 
 """
