@@ -269,7 +269,7 @@ def runGoogleSheets(req):
 POST request from Slack channel
 Command: `/check <candidate name>`
 """
-@app.route('/check', methods=['POST'])
+@app.route('/candidatetracker/check', methods=['POST'])
 def track_candidates():
 
     # Check if valid request through (team_id) and (token)
@@ -284,24 +284,24 @@ def track_candidates():
         error('Please submit a valid command', actions['/check']['helpTxt'], req['response_url'])
         return
 
+    requests.post(response_url, json=jsonify(response_type='ephemeral',text='Loading your candidate data...'))
     runGoogleSheets(req)
 
-    return jsonify(
-        response_type='ephemeral',
-        text='Loading your candidate data...',
-    )
+    # return jsonify(
+    #     response_type='ephemeral',
+    #     text='Loading your candidate data...',
+    # )
 
 
 """
 GET request for testing
 Command: `/check <candidate name>`
 """
-@app.route('/test', methods=['GET'])
+@app.route('/candidatetracker/test', methods=['GET'])
 def test():
 
     return jsonify(
-        response_type='ephemeral',
-        text='What\'s HKN?',
+        text='Connection is working...',
     )
 
 
