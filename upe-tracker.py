@@ -299,10 +299,7 @@ Command: `/check <candidate name>`
 """
 @app.route('/candidatetracker/test', methods=['GET'])
 def test():
-
-    return jsonify(
-        text='Connection is working...',
-    )
+    return jsonify( text='What\'s HKN?')
 
 
 if __name__ == '__main__':
