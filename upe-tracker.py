@@ -269,7 +269,7 @@ def runGoogleSheets(req):
 POST request from Slack channel
 Command: `/check <candidate name>`
 """
-@app.route('/check', methods=['POST'])
+@app.route('/candidatetracker/check', methods=['POST'])
 def track_candidates():
 
     # Check if valid request through (team_id) and (token)
@@ -296,13 +296,9 @@ def track_candidates():
 GET request for testing
 Command: `/check <candidate name>`
 """
-@app.route('/test', methods=['GET'])
+@app.route('/candidatetracker/test', methods=['GET'])
 def test():
-
-    return jsonify(
-        response_type='ephemeral',
-        text='What\'s HKN?',
-    )
+    return jsonify( text='What\'s HKN?')
 
 
 if __name__ == '__main__':
