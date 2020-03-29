@@ -288,7 +288,11 @@ def track_candidates():
         error('Please submit a valid command', actions['/check']['helpTxt'], req['response_url'])
         return
 
-    # Create a thread to spawn find the correct values    
+    # Login into client
+    if creds.access_token_expired:
+        gs_client.login()
+
+    # Create a thread to spawn find the correct values
     processThread = threading.Thread(
             target=runGoogleSheets,
             args=(req,)
