@@ -290,7 +290,7 @@ def track_candidates():
 
     # Login into client
     if creds.access_token_expired:
-        gs_client.login()
+        client.login()
 
     # Create a thread to spawn find the correct values
     processThread = threading.Thread(
