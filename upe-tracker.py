@@ -60,7 +60,7 @@ candSheetCol = {
     'gm3': 22,
     'paid': 23,
     'challenge': 25,
-    # 'challenge_task': 26,
+    'challenge_task': 26,
     'socials_ono_comp': 11, #DELETE THIS AFTER SP20 SEM
     'socials_ono_reqs': 15 #DELETE THIS AFTER SP20 SEM
 }
@@ -157,8 +157,10 @@ def getMatchedCandidates(expr):
 
         # Insert `Candidate Tracker` contents into dictionary
         for col, colNum in candSheetCol.items():
-            print("Testing:", col, colNum)
-            candInfo[col] = candidate[colNum-1]
+            if colNum - 1 > maxCol:
+                canInfo[col] = ""
+            else:    
+                candInfo[col] = candidate[colNum-1]
 
         # Insert `Socials` contents into dictionary
         candInfo['socials'] = getCandidateEvents(socialSheet, 1)
@@ -203,8 +205,8 @@ def formatCandidateText(dct):
 
         # Challenge
         challengeTxt = '• Challenge: {done}\n'.format(done='Done' if candInfo['challenge']=='YES' else '*NO*')
-        #if candInfo['challenge']=='YES':
-        #    challengeTxt += '\t - {task}\n'.format(task=candInfo['challenge_task'])
+        if candInfo['challenge_task']:
+            challengeTxt += '\t - {task}\n'.format(task=candInfo['challenge_task'])
 
         # General Meeting
         gm1 = '• GM1 Requirements: {done}\n'.format(done='Yes' if candInfo['gm1']=='YES' else '*NO*')
