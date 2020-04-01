@@ -64,6 +64,7 @@ candSheetCol = {
     'socials_ono_comp': 11, #DELETE THIS AFTER SP20 SEM
     'socials_ono_reqs': 15 #DELETE THIS AFTER SP20 SEM
 }
+maxCol = max(candSheet.values())
 
 app = Flask(__name__)
 
