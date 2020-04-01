@@ -55,12 +55,12 @@ candSheetCol = {
     'prof_reqs': 13,
     'ono_complete': 10,
     'ono_reqs': 14,
-    'gm1': 20, 
+    'gm1': 20,
     'gm2': 21,
     'gm3': 22,
     'paid': 23,
     'challenge': 25,
-    'challenge_task': 26,
+    # 'challenge_task': 26,
     'socials_ono_comp': 11, #DELETE THIS AFTER SP20 SEM
     'socials_ono_reqs': 15 #DELETE THIS AFTER SP20 SEM
 }
@@ -122,7 +122,7 @@ Example dct[<candidate name>]
     'gm3': NO,
     'paid': TRUE,
     'challenge': YES,
-    'socialAndOno': 
+    'socialAndOno':
 }
 """
 def getMatchedCandidates(expr):
