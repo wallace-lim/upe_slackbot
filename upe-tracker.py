@@ -64,7 +64,7 @@ candSheetCol = {
     'socials_ono_comp': 11, #DELETE THIS AFTER SP20 SEM
     'socials_ono_reqs': 15 #DELETE THIS AFTER SP20 SEM
 }
-maxCol = max(candSheet.values())
+maxCol = max(candSheetCol.values())
 
 app = Flask(__name__)
 
@@ -160,7 +160,7 @@ def getMatchedCandidates(expr):
         for col, colNum in candSheetCol.items():
             if colNum - 1 > maxCol:
                 candInfo[col] = ""
-            else:    
+            else:
                 candInfo[col] = candidate[colNum-1]
 
         # Insert `Socials` contents into dictionary
