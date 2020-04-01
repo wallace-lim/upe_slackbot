@@ -159,7 +159,7 @@ def getMatchedCandidates(expr):
         # Insert `Candidate Tracker` contents into dictionary
         for col, colNum in candSheetCol.items():
             if colNum - 1 > maxCol:
-                canInfo[col] = ""
+                candInfo[col] = ""
             else:    
                 candInfo[col] = candidate[colNum-1]
 
