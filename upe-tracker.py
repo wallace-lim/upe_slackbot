@@ -50,16 +50,18 @@ standardCol = {
 # Candidate Tracker Sheet Column Values
 candSheetCol = {
     'socials_complete': 8,
-    'socials_reqs': 11,
+    'socials_reqs': 12,
     'prof_complete': 9,
-    'prof_reqs': 12,
+    'prof_reqs': 13,
     'ono_complete': 10,
-    'ono_reqs': 13,
+    'ono_reqs': 14,
     'gm1': 19,
     'gm2': 20,
     'gm3': 21,
     'paid': 22,
     'challenge':24,
+    'socials_ono_comp': 11, #DELETE THIS AFTER SP20 SEM
+    'socials_ono_reqs': 15 #DELETE THIS AFTER SP20 SEM
 }
 
 app = Flask(__name__)
@@ -119,6 +121,7 @@ Example dct[<candidate name>]
     'gm3': NO,
     'paid': TRUE,
     'challenge': YES,
+    'socialAndOno': 
 }
 """
 def getMatchedCandidates(expr):
@@ -205,13 +208,30 @@ def formatCandidateText(dct):
         gm3 = '• GM3 Requirements: {done}\n'.format(done='Yes' if candInfo['gm3']=='YES' else '*NO*')
         paid = '• Paid: {done}\n'.format(done='Yes' if candInfo['paid']=='TRUE' else '*NO*')
 
+        # --------------- REPLACE AFTER SP20 SEM -----------------
+        # requirements = {
+        #     'type':'section',
+        #     'text': {
+        #         'type': 'mrkdwn',
+        #         'text': nameTxt + socialsTxt + profTxt + onoTxt + challengeTxt
+        #     }
+        # }
+
+        # --------------- DELETE AFTER SP20 SEM -----------------
+        socialOnoTxt = '• Socials / One-on-One: {pss}/{req}\n'.format(pss=candInfo['socials_ono_comp'], req=candInfo['socials_ono_reqs'])
+        for social in candInfo['socials']:
+            socialOnoTxt += '\t - {social}\n'.format(social=social)
+        for ono in candInfo['onos']:
+            socialOnoTxt += '\t - {ono}\n'.format(ono=ono)
+
         requirements = {
             'type':'section',
             'text': {
                 'type': 'mrkdwn',
-                'text': nameTxt + socialsTxt + profTxt + onoTxt + challengeTxt
+                'text': nameTxt + socialOnoTxt + profTxt + challengeTxt
             }
         }
+        # --------------- END DELETE AFTER SP20 SEM -----------------
 
         attendance = {
             'type':'section',
@@ -221,6 +241,7 @@ def formatCandidateText(dct):
             }
         }
 
+        # Add comments together into array block (printed using Slack)
         block.append(requirements)
         block.append(attendance)
 
