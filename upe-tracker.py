@@ -136,7 +136,6 @@ def getMatchedCandidates(expr):
         eventsVisited = []
         for eventIndex in range(4, len(sheetLabels)-2, jump):
             if candSheet[eventIndex] and jump == 2:
-                print(eventIndex)
                 eventsVisited.append("{type} : {name}".format(type=candSheet[eventIndex], name=candSheet[eventIndex+1]))
             elif candSheet[eventIndex]:
                 eventsVisited.append(sheetLabels[eventIndex])
@@ -158,8 +157,7 @@ def getMatchedCandidates(expr):
 
         # Insert `Candidate Tracker` contents into dictionary
         for col, colNum in candSheetCol.items():
-            print(candidate[colNum-1])
-            if colNum > maxCol - 1:
+            if colNum - 1 > len(candidate):
                 candInfo[col] = ""
             else:
                 candInfo[col] = candidate[colNum-1]
