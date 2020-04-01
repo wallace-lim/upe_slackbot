@@ -55,11 +55,12 @@ candSheetCol = {
     'prof_reqs': 13,
     'ono_complete': 10,
     'ono_reqs': 14,
-    'gm1': 19,
-    'gm2': 20,
-    'gm3': 21,
-    'paid': 22,
-    'challenge':24,
+    'gm1': 20, 
+    'gm2': 21,
+    'gm3': 22,
+    'paid': 23,
+    'challenge': 25,
+    'challenge_task': 26,
     'socials_ono_comp': 11, #DELETE THIS AFTER SP20 SEM
     'socials_ono_reqs': 15 #DELETE THIS AFTER SP20 SEM
 }
@@ -201,6 +202,8 @@ def formatCandidateText(dct):
 
         # Challenge
         challengeTxt = '• Challenge: {done}\n'.format(done='Done' if candInfo['challenge']=='YES' else '*NO*')
+        if candInfo['challenge']=='YES':
+            challengeTxt += '\t - {task}\n'.format(task=candInfo['challenge_task'])
 
         # General Meeting
         gm1 = '• GM1 Requirements: {done}\n'.format(done='Yes' if candInfo['gm1']=='YES' else '*NO*')
