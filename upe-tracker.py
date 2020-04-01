@@ -202,8 +202,8 @@ def formatCandidateText(dct):
 
         # Challenge
         challengeTxt = '• Challenge: {done}\n'.format(done='Done' if candInfo['challenge']=='YES' else '*NO*')
-        if candInfo['challenge']=='YES':
-            challengeTxt += '\t - {task}\n'.format(task=candInfo['challenge_task'])
+        #if candInfo['challenge']=='YES':
+        #    challengeTxt += '\t - {task}\n'.format(task=candInfo['challenge_task'])
 
         # General Meeting
         gm1 = '• GM1 Requirements: {done}\n'.format(done='Yes' if candInfo['gm1']=='YES' else '*NO*')
