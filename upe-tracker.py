@@ -157,6 +157,7 @@ def getMatchedCandidates(expr):
 
         # Insert `Candidate Tracker` contents into dictionary
         for col, colNum in candSheetCol.items():
+            print("Testing:", col, colNum)
             candInfo[col] = candidate[colNum-1]
 
         # Insert `Socials` contents into dictionary
